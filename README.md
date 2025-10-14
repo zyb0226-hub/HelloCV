@@ -32,6 +32,7 @@ source /opt/ros/humble/setup.bash
 ros2 pkg list | grep demo_nodes_cpp
 ros2 run demo_nodes_cpp talker
 
+![ROS2测试](Git_test.png)
 运行结果在仓库图片ROS_test.png中
 
 二、安装配置OpenCV
