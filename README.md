@@ -71,6 +71,7 @@ make
 #运行
 ./aaa
 
+![OpenCV测试](opencv_test.png)
 运行结果在仓库图片opencv_test.png中
 
 三、安装配置VScode
@@ -94,6 +95,7 @@ ssh-keygen -t ed25519 -b 4096 -C "id.com"
 # 查看公钥
 cat ~/.ssh/3113255371@qq.com_id.pub
 
+![Git测试](Git_test.png)
 运行结果在仓库图片Git_test中
 
 
