@@ -98,6 +98,15 @@ cat ~/.ssh/3113255371@qq.com_id.pub
 ![Git测试](Git_test.png)
 运行结果在仓库图片Git_test中
 
+语雀笔记链接
+
+https://www.yuque.com/g/ruizhidehoutou/lcigge/sfoygkra1g73db40/collaborator/join?token=WTakiltiwZS0z3zo&source=doc_collaborator# 《Linux系统能力》
+
+https://www.yuque.com/g/ruizhidehoutou/lcigge/rbgfd1zhhx0dto5z/collaborator/join?token=BpAOvkqjS7MTKYin&source=doc_collaborator&goto=%2Fruizhidehoutou%2Flcigge%2Frbgfd1zhhx0dto5z%2Fedit# 《实践任务记录》
+
+https://www.yuque.com/g/ruizhidehoutou/lcigge/lw48uygvkrr2qu0w/collaborator/join?token=CbECNIxCcIQjl6yQ&source=doc_collaborator&goto=%2Fruizhidehoutou%2Flcigge%2Flw48uygvkrr2qu0w%2Fedit# 《Git操作》
+
+
 
 
 
