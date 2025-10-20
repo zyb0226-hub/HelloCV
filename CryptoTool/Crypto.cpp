@@ -3,7 +3,7 @@
 using namespace std;
 class Crypto {
 public:
-    string encrypt(string data, int key) {
+    static string encrypt(string data, int key) {
         for(int i = 0; i < data.length(); i++) {
             char c = data[i];
             if(isupper(c)) {
@@ -17,7 +17,7 @@ public:
         return data;
     }
 
-    string decrypt(string data, int key) {
+    static string decrypt(string data, int key) {
         for(int i = 0; i < data.length(); i++) {
             char c = data[i];
             if(isupper(c)) {
