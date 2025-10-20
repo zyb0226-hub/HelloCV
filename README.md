@@ -6,9 +6,9 @@
 
 快速开始
 ```bash
-cd CrypoTool
+cd CryptoTool
 mkdir build
 cd build
 cmake ..
 make
-./CrypoTool
+./CryptoTool
