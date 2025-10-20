@@ -4,11 +4,6 @@
 
 [CryptoTool - 文本加密解密工具](./CryptoTool/)
 
-快速开始
-```bash
-cd CryptoTool
-mkdir build
-cd build
-cmake ..
-make
-./CryptoTool
+这次实践任务可以称得上多灾多难了，
+
+
