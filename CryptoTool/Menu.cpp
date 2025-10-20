@@ -13,7 +13,7 @@ public:
 };
 class Menu {
 public:
-    void menu(){
+    static void menu(){
         cout << "Welcome to CryptoTool!" << endl;   //I'm so strange why I can't use Chinese in VScode.It's so weird.
         cout << "1. Encrypt Data" << endl;          //But it's extremely good to enjoy it's automatic code producer.
         cout << "2. Decrypt Data" << endl;
@@ -22,7 +22,7 @@ public:
         cout << "5. Exit" << endl;
         cout << "Please select an option: ";
     }
-    void handle(){
+    static void handle(){
         int choice,key;
         string text;
         cin >> choice;
