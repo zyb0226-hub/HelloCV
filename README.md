@@ -2,6 +2,8 @@
 仓库
 2025210498 AI+先进技术 赵奕博
 
+先将红绿灯的颜色的HSV值提取出来，便于下面图形提取时直接确定颜色范围
+
 ```cpp
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
@@ -72,7 +74,98 @@ int main() {
     return 0;
 }
 ```
+最终结果
+
+
 
 红：H[173,179],S[128,255],V[61,255]
 
 绿：H[82,90],S[128,255],V[133,207]
+
+```
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/highgui.hpp>
+#include <iostream>
+
+using namespace cv;
+using namespace std;
+
+//已确定好颜色HSV范围
+Scalar redlower(173,128,61);
+Scalar redupper(179,255,255);
+Scalar greenlower(82,128,133);
+Scalar greenupper(90,255,207);
+
+void detect(Mat &frame){
+    Mat imgHSV, redMask, greenMask;
+    cvtColor(frame, imgHSV, COLOR_BGR2HSV);
+
+    //直接生成处理好的掩膜
+    inRange(imgHSV, redlower, redupper, redMask);
+    inRange(imgHSV, greenlower, greenupper, greenMask);
+
+    Mat kernel = getStructuringElement(MORPH_RECT, Size(5, 5));
+
+    morphologyEx(redMask, redMask, MORPH_CLOSE, kernel);
+    morphologyEx(greenMask, greenMask, MORPH_CLOSE, kernel);
+
+    vector<vector<Point>> contours;
+    string lightColor = "?";
+    Rect largestRect;
+
+    findContours(redMask, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+    for(auto &contour : contours){
+        if(contourArea(contour) > 10000){
+            Rect rect = boundingRect(contour);
+            if(rect.area() > largestRect.area()){
+                largestRect = rect;
+                lightColor = "red";
+            }
+        }
+    }
+
+    //这里要取所有色块中最大的，否则数字也可能被框出来
+    findContours(greenMask, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+    for(auto &contour : contours){
+        if(contourArea(contour) > 10000){
+            Rect rect = boundingRect(contour);
+            if(rect.area() > largestRect.area()){
+                largestRect = rect;
+                lightColor = "green";
+            }
+        }
+    }
+
+    //用和灯相同颜色的框（doge）
+    if(lightColor != "?"){
+        Scalar color;
+        if(lightColor == "red"){
+            color = Scalar(0,0,255);
+        }
+        else{
+            color = Scalar(0,255,0);
+        }
+        rectangle(frame, largestRect, color, 2);
+        putText(frame, lightColor, Point(120,160), FONT_HERSHEY_SIMPLEX, 2, Scalar(255,255,255), 4);
+    }
+}
+
+int main(){
+    string path = "TrafficLight.mp4";
+    VideoCapture cap(path);
+    VideoWriter output("result.avi", VideoWriter::fourcc('X','2','6','4'), 30, Size(1920, 1080));
+
+    Mat frame;
+    while(cap.read(frame)){
+        detect(frame);
+        output.write(frame);
+        imshow("Traffic Light Detector",frame);
+        if(waitKey(1) == 27) break;
+    }
+    cap.release();
+    output.release();
+    return 0;
+}
+//不知道为什么，视频只显示了4秒，DS说可能是编码器兼容性的原因，有点无奈。
+```
