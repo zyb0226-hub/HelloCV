@@ -76,7 +76,9 @@ int main() {
 ```
 最终结果
 
+![red](red.png.png)
 
+![green](green.png.png)
 
 红：H[173,179],S[128,255],V[61,255]
 
@@ -169,3 +171,5 @@ int main(){
 }
 //不知道为什么，视频只显示了4秒，DS说可能是编码器兼容性的原因，有点无奈。
 ```
+
+![vedio](result.avi)
