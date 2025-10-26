@@ -2,16 +2,57 @@
 仓库
 2025210498 AI+先进技术 赵奕博
 
-[CryptoTool - 文本加密解密工具](./CryptoTool/)
+```cpp
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/highgui.hpp>
+#include <iostream>
 
-这次实践任务可以称得上多灾多难了，先简单说一下我的思路：Crypto类负责加密解密，FileHandler类负责文件读写，包括提取文件内容，Menu类作为菜单阐释前两者的功能并发挥与用户的交互作用
+using namespace cv;
+using namespace std;
 
-最终成果程图可表示为：用户选择功能 → Menu类接收输出 → 如果是文件：FileHandler读取 → Crypoto加密解密 → FileHandler保存 / 如果是文本：直接用Crypoto加密解密 → 显示结果
+Mat imgHSV, mask;
+int hmin = 0, smin = 0, vmin = 0;
+int hmax = 179, smax = 255, vmax = 255;
 
-当然也不全是坏事，这次使用VScode写代码让我深深地发现了其功能的强大，按Tab键自动补全代码简直是神，我写个encrypt函数，写完后继续写decrypt函数时，发现它已经自动生成好了，检查后发现是对的，那还说啥，爽按Tab键就完了。这功能确实好用，写个readfile函数他能给我把writefile函数生成出来，写个cout它甚至知道我想输出什么。我都没告诉它任务是什么，它就猜出一部分了。
+int main() {
+    string path = "TrafficLight.mp4";
+    VideoCapture cap(path);
+    Mat img;
+    int f = 1;
+    while(true){
+        cap.read(img);
+        if(f){
+            cout << img.rows << endl << img.cols << endl;
+        }
+        if(img.empty()){
+            cout << "视频读取完毕" << endl;
+            break;
+        }
+        else{
+            imshow("视频播放", img);
+            waitKey(20);
+        }
+        
+        cvtColor(img, imgHSV, COLOR_BGR2HSV);
+        namedWindow("Trackbars", (640, 200));
+        createTrackbar("Hue Min", "Trackbars", &hmin, 179);
+        createTrackbar("Hue Max", "Trackbars", &hmax, 179);
+        createTrackbar("Sat Min", "Trackbars", &smin, 255);
+        createTrackbar("Sat Max", "Trackbars", &smax, 255);
+        createTrackbar("Val Min", "Trackbars", &vmin, 255);
+        createTrackbar("Val Max", "Trackbars", &vmax, 255);
 
-但我真的要红温了。先说小问题，创建一个类到下面调用怎么就爆红了？问了Copilot Chat才想起来这样的类要加static，顺便提一句，我在Ubuntu里只有VScode里怎么搞都写不了中文，与Copilot Chat对话都用的英文，注释也只能用英文，真是闹麻了，终于敲完代码了，本以为能松一口气，结果cmake .. 时又故障，和Copilot Chat检查半天才发现是单词拼错了。FileHandler漏了个l(。以后长记性了，一定要注意拼写，否则坑自己更坑队友。最后要把CryptoTool提交到GitHub，结果Ubuntu的upload file死都点不动，真的鼠标都点烂了。这时DS告诉我还能用远程仓库上传，输入密码半天不对，我还以为是密码错了！这时DS又告诉我GitHub从2021年8月就不支持使用账户密码登录，推荐用SSH密钥登陆，不是你早点在干嘛？更严重的是，我还得一直看网络的脸色，一不高兴就直接报错，耗费我的时间，摧残我的精神。经历九九八十一难，这份文件终于到达了GitHub。
-
-真是一场酣畅淋漓的赤石啊！实践是最好的磨刀石，使我们变得锋利，面对问题更能直击要害，但也磨平了我们的棱角。
+        while(true){
+        Scalar lower(hmin, smin, vmin);
+        Scalar upper(hmax, smax, vmax);
+        inRange(imgHSV, lower, upper, mask);
+        imshow("Mask", mask);
+        waitKey(1);
+        }
+    }
+    return 0;
+}
+```
 
 
